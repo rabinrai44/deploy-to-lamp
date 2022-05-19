@@ -29,3 +29,11 @@ C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Core.dll
 C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Infrastructure.dll
 C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Infrastructure.pdb
 C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Core.pdb
+C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Humanizer.dll
+C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\MySqlConnector.dll
+C:\Development\deployment\deploy-to-linux\src\API\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
