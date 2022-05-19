@@ -1,5 +1,4 @@
 using API.Entities;
-using Core.Models;
 
 namespace Core.Interfaces;
 

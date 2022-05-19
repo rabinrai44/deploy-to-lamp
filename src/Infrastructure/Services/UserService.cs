@@ -27,16 +27,6 @@ namespace Infrastructure.Services
 
         public void Create(User user)
         {
-            // validate
-            if (_context.Users.Any(x => x.Email == user.Email)) { }
-            // throw new AppException("User with the email '" + model.Email + "' already exists");
-
-            // // map model to new user object
-            // var user = _mapper.Map<User>(model);
-
-            // hash password
-            // user.PasswordHash = BCrypt.HashPassword(model.Password);
-
             // save user
             _context.Users.Add(user);
             _context.SaveChanges();
