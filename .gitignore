@@ -1,4 +1,6 @@
 obj
+obj/
+bin
 bin/
 *.db
 appsettings.json
