@@ -1,0 +1,9 @@
+*.db
+*.rdb
+publish
+wwwroot
+.idea
+.vs
+node_modules
+.DS_Store
+appsettings.json
