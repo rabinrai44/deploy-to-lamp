@@ -1,9 +1,12 @@
+obj
+bin/
 *.db
+appsettings.json
 *.rdb
+settings.json
 publish
-wwwroot
 .idea
 .vs
+.vscode
 node_modules
 .DS_Store
-appsettings.json
