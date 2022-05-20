@@ -18,6 +18,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5000);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,5 +37,22 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+var scope = app.Services.CreateScope();
+
+var services = scope.ServiceProvider;
+var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+
+try
+{
+    // Data migration at initial app startup
+    var context = services.GetRequiredService<AppDbContext>();
+    context.Database.Migrate();
+}
+catch (Exception ex)
+{
+    var logger = loggerFactory.CreateLogger<Program>();
+    logger.LogError(ex, "An error occurred during the migration");
+}
 
 app.Run();
