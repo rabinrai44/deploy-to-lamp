@@ -9,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 27)));
+    var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
+    // options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 27)));
+    options.UseNpgsql(connStr);
 });
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddControllers();

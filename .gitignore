@@ -3,7 +3,7 @@ obj/
 bin
 bin/
 *.db
-appsettings.json
+# appsettings.json
 *.rdb
 settings.json
 publish
