@@ -1,7 +1,10 @@
 using deploy_to_linux.Core.Interfaces;
+using deploy_to_linux.Helpers;
 using deploy_to_linux.Infrastructure.Data;
 using deploy_to_linux.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +12,32 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
     // options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 27)));
-    options.UseNpgsql(connStr);
+    string connecStr = builder.Configuration.GetConnectionString("DefaultConnection");
+    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    connecStr = string.IsNullOrEmpty(databaseUrl) ? connecStr : BuildConnectionString(databaseUrl);
+
+    //build the connection string from the environment. i.e. Heroku
+    string BuildConnectionString(string databaseUrl)
+    {
+        var databaseUri = new Uri(databaseUrl);
+        var userInfo = databaseUri.UserInfo.Split(':');
+        var builder = new NpgsqlConnectionStringBuilder
+        {
+            Host = databaseUri.Host,
+            Port = databaseUri.Port,
+            Username = userInfo[0],
+            Password = userInfo[1],
+            Database = databaseUri.LocalPath.TrimStart('/'),
+            SslMode = SslMode.Require,
+            TrustServerCertificate = true
+        };
+        return builder.ToString();
+    }
+    options.UseNpgsql(connecStr);
 });
+
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -20,12 +45,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenLocalhost(5000);
-});
+// builder.WebHost.ConfigureKestrel(options =>
+// {
+//     options.ListenLocalhost(5000);
+// });
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
